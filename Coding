@@ -1,0 +1,93 @@
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+
+void merge(int arr[], int x, int y, int z)
+{
+   int i, j, k;
+   int size_x = y - x + 1;
+   int size_y = z - y;
+   int L[size_x], R[size_y];
+   
+   for (i = 0; i < size_x; i++)
+   {
+       L[i] = arr[x + i];
+   }
+   
+   for (j = 0; j < size_y; j++)
+   {
+       R[j] = arr[y + 1 + j];
+   }
+   
+   i = 0;
+   j = 0;
+   k = x;
+   
+   while (i < size_x && j < size_y)
+   {
+       if (L[i] <= R[j])
+       {
+           arr[k] = L[i];
+           i++;
+       }
+       else
+       {
+           arr[k] = R[j];
+           j++;
+       }
+       k++;
+   }
+   while (i < size_x)
+   {
+       arr[k] = L[i];
+       i++;
+       k++;
+   }
+   while (j < size_y)
+   {
+       arr[k] = R[j];
+       j++;
+       k++;
+   }
+}
+
+
+void mergeSort(int arr[], int x, int z)
+{
+   if (x < z)
+   {
+       int y = x + (z - x) / 2;
+       mergeSort(arr, x, y);
+       mergeSort(arr, y + 1, z);
+       merge(arr, x, y, z);
+   }
+}
+
+
+int main()
+{
+   int arr_size;
+   
+   cout<<"What is the size of your array: ";
+   cin>>arr_size;
+   
+   int arr[arr_size];
+   
+   cout<<"Enter Array: ";
+   
+   for(int i=0;i<arr_size;i++)
+   {
+       cin>>arr[i];
+   }
+   
+   mergeSort(arr, 0, arr_size - 1);
+   
+   cout<<"\nSorted array is \n";
+   
+   for (int i = 0; i < arr_size; i++)
+   {
+       cout<<arr[i]<<" ";
+   }
+   
+   printf("\n");
+}
